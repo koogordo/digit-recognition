@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var TensorEngine = require('../tensor-engine/TensorEngine');
+const express = require('express');
+const router = express.Router();
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   let tensorEngine = new TensorEngine();

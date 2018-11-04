@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const NeuralNetwork = require('../tensor-engine/NeuralNetwork');
 
-router.post('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.json({ success: true, message: 'You have reached the tensorflow api' });
 });
 

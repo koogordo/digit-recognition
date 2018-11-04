@@ -1,5 +1,5 @@
 const MnistDataSet = require('./MnistDataSet');
-class NueralNetwork {
+class NeuralNetwork {
   constructor(trainingData) {
     this.mds = new MnistDataSet();
     this.trainingData = this.mds.data();
@@ -9,4 +9,4 @@ class NueralNetwork {
     return this.trainingData;
   }
 }
-module.exports = NueralNetwork;
+module.exports = NeuralNetwork;

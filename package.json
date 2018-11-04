@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www --ignore './public/*.json'  "
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^0.13.3",

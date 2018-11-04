@@ -1,7 +1,9 @@
-const trainingData = require(__dirname + '/../public/trainingData.json');
 class TensorTrainer {
-  constructor() {
-    console.log('constructing tensor trainer class');
+  constructor(trainingData) {
+    this.trainingData = trainingData;
+    this.trainingData.map(item => {
+      tf.tensor2d(item.data, [28, 28]);
+    });
   }
 }
 module.exports = TensorTrainer;

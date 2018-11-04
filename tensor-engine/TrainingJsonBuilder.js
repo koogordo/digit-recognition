@@ -29,15 +29,10 @@ class TrainingJsonBuilder {
         label: lfb[i],
         data: imagesAsPixels[i]
       });
-      if (i % 5000 === 0) {
-        console.log(`Reached image ${i}`);
-      }
     }
-    // NOTE We should check filesystem to see if file exixts if it doesn't then write
-    // or if it does then just return the json.
 
-    fs.writeFile(
-      __dirname + '/../../trainingData.json',
+    return await fs.writeFile(
+      __dirname + '/../public/trainingData.json',
       JSON.stringify(imagesJsonObject),
       err => {
         if (err) {
@@ -45,11 +40,6 @@ class TrainingJsonBuilder {
         }
       }
     );
-    return await {
-      status: 'done',
-      success: true,
-      message: 'Training Data is Ready to Use'
-    };
   }
 
   async createDataFileBufferAsync() {

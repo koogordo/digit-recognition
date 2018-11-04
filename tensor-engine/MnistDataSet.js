@@ -1,19 +1,17 @@
 const fs = require('fs');
-class TrainingJsonBuilder {
+class MnistDataSet {
   constructor() {
-    // this.loadDataBuffer();
-    // this.loadLabelBuffer();
+    this.loadDataBuffer().then(dfb => {
+      this.loadLabelBuffer().then(lfb => {
+        this.dataFileBuffer = dfb;
+        this.labelFileBuffer = lfb;
+      });
+    });
   }
 
-  loadDataBuffer() {
-    return this.createDataFileBufferAsync();
-  }
-
-  loadLabelBuffer() {
-    return this.createLabelFileBufferAsync();
-  }
-
-  async buildTrainingJson(dfb, lfb) {
+  data() {
+    let dfb = this.dataFileBuffer;
+    let lfb = this.labelFileBuffer;
     let imagesAsPixels = [];
     let imagesJsonObject = [];
     let pixels = [];
@@ -30,16 +28,23 @@ class TrainingJsonBuilder {
         data: imagesAsPixels[i]
       });
     }
+    return imagesJsonObject; //fs.writeFile(
+    //   __dirname + '/../public/trainingData.json',
+    //   JSON.stringify(imagesJsonObject),
+    //   err => {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //   }
+    // );
+  }
 
-    return await fs.writeFile(
-      __dirname + '/../public/trainingData.json',
-      JSON.stringify(imagesJsonObject),
-      err => {
-        if (err) {
-          console.log(err);
-        }
-      }
-    );
+  loadDataBuffer() {
+    return this.createDataFileBufferAsync();
+  }
+
+  loadLabelBuffer() {
+    return this.createLabelFileBufferAsync();
   }
 
   async createDataFileBufferAsync() {
@@ -51,4 +56,4 @@ class TrainingJsonBuilder {
     return await lfb;
   }
 }
-module.exports = TrainingJsonBuilder;
+module.exports = MnistDataSet;

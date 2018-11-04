@@ -1,11 +1,11 @@
-const trainingData = require('../public/trainingData.json');
+const trainingData = require(__dirname + '../../trainingData.json');
 class TensorTrainer {
   constructor() {
     let count = 0;
-    // trainingData.map(data => {
-    //   console.log(`Training Item: ${count}`);
-    //   count++;
-    // });
+    trainingData.map(data => {
+      console.log(`Training Item: ${count}`);
+      count++;
+    });
   }
 }
 module.exports = TensorTrainer;

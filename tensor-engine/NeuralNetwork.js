@@ -91,32 +91,32 @@ class NeuralNetwork {
       loss: 'categoricalCrossentropy',
       metrics: ['accuracy']
     });
-    // this.train(model, batchObjects);
+    this.train(model, batchObjects);
   }
 
   train(model, batchObjects) {
-    let start = Date.now();
+    // for (let i = 0; i < batchObjects.length; i++) {
+    //if (i % 5000 === 0 && i >= 5000) {
+    //console.log(
+    // `!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! - ${i} - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`
+    //);
+    //}
+    let inputs = [];
+    let outputs = [];
+    console.log('Creating input and output arrays...');
     for (let i = 0; i < batchObjects.length; i++) {
-      this.fitAsync(model, batchObjects[i].xs, batchObjects[i].ys).then(
-        history => {}
-      );
+      let xs = tf.tensor4d(batchObjects[i].xs, [64, 28, 28, 1]);
+      inputs.push(xs);
+      let ys = tf.tensor2d(batchObjects[i].ys, [64, 10]);
+      outputs.push(ys);
     }
-    let duration = Date.now() - start;
-    // console.log(loss);
-    console.log(`It took: ${duration}`);
-  }
-  async fitAsync(model, xs, ys) {
-    let inputs = tf.tensor4d(xs, [64, 28, 28, 1]);
-    let outputs = tf.tensor2d(ys, [64, 10]);
-    let modelHistory = model
+    console.log('Done with creating the input and output arrays');
+    model
       .fit(inputs, outputs, {
         epochs: 50
       })
-      .then(history => {
-        return history;
-      })
-      .catch(err => console.log(err));
-    return await modelHistory;
+      .then(history => {})
+      .catch(err => console.log(err.message));
   }
 }
 

@@ -24,12 +24,11 @@ class NeuralNetwork {
 
   createModel(batchObjects) {
     //create a sequential model where layers can be stacked
-    let model;
-    model = tf.sequential();
+    this.model = tf.sequential();
     const LEARNING_RATE = 0.15;
 
     //takes in config objects
-    model.add(
+    this.model.add(
       tf.layers.conv2d({
         inputShape: [28, 28, 1],
         kernelSize: 5, //The size of the sliding convolutional filter windows to be applied to the input data. 5x5 pixels
@@ -40,7 +39,7 @@ class NeuralNetwork {
       })
     );
     //max pooling downsamples it
-    model.add(
+    this.model.add(
       tf.layers.maxPooling2d({
         poolSize: [2, 2], //The size of the sliding pooling windows to be applied to the input data.
         strides: [2, 2] //means that the pooling layer will apply 2x2 windows to the input data.
@@ -48,7 +47,7 @@ class NeuralNetwork {
     );
 
     //we repeat the 2 layers increasing the filters from 8 to 16
-    model.add(
+    this.model.add(
       tf.layers.conv2d({
         //input shape 'inherited' from last conv2d layer
         kernelSize: 5,
@@ -59,7 +58,7 @@ class NeuralNetwork {
       })
     );
 
-    model.add(
+    this.model.add(
       tf.layers.maxPooling2d({
         poolSize: [2, 2],
         strides: [2, 2]
@@ -67,10 +66,10 @@ class NeuralNetwork {
     );
 
     //Next, let's add a flatten layer to flatten the output of the previous layer to a vector
-    model.add(tf.layers.flatten());
+    this.model.add(tf.layers.flatten());
 
     //add a dense layer (also known as a fully connected layer), which will perform the final classification.
-    model.add(
+    this.model.add(
       tf.layers.dense({
         units: 10,
         kernelInitializer: 'VarianceScaling',
@@ -86,15 +85,15 @@ class NeuralNetwork {
     of our model and the probability distribution given by our label, 
     which will be a distribution with 1 (100%) in the correct class label.
     */
-    model.compile({
+   this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
       metrics: ['accuracy']
     });
-    this.train(model, batchObjects);
+    this.train(batchObjects).then(() => {}).catch(err => {console.log(err)});
   }
 
-  train(model, batchObjects) {
+  async train(batchObjects) {
     // for (let i = 0; i < batchObjects.length; i++) {
     //if (i % 5000 === 0 && i >= 5000) {
     //console.log(
@@ -105,19 +104,35 @@ class NeuralNetwork {
     let outputs = [];
     console.log('Creating input and output arrays...');
     for (let i = 0; i < batchObjects.length; i++) {
-      let xs = tf.tensor4d(batchObjects[i].xs, [64, 28, 28, 1]);
+      let xs = tf.tensor4d(batchObjects[i].xs, [64,28, 28,1]);
       inputs.push(xs);
-      let ys = tf.tensor2d(batchObjects[i].ys, [64, 10]);
+      let ys = tf.tensor(batchObjects[i].ys, [64,10]);
       outputs.push(ys);
     }
     console.log('Done with creating the input and output arrays');
-    model
-      .fit(inputs, outputs, {
-        epochs: 50
-      })
-      .then(history => {})
-      .catch(err => console.log(err.message));
+    let histories = [];
+    for ( let i = 0; i < inputs.length; i++) {
+      await this.model
+      .fit(inputs[i], outputs[i], 
+         {
+            epochs: 50,
+            batchSize: 64
+         }).then((history) => histories.push(history)).catch(err => console.log(err));
+    }
+    console.log(`${histories.length} : ${histories[0]}`);
   }
+
+//   async fitAsync(xs, ys) {
+//    await this.model
+//    .fit(xs, ys, {
+//      epochs: 1,
+//      batchSize: 64
+//    });
+//    // .then(history => {
+//    //    return history;
+//    // })
+//    // .catch(err => console.log(err));
+//   }
 }
 
 module.exports = NeuralNetwork;

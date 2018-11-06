@@ -113,7 +113,7 @@ class NeuralNetwork {
     for (let i = 0; i < inputs.length; i++) {
       await this.model
         .fit(inputs[i], outputs[i], {
-          epochs: 225,
+          epochs: 600,
           batchSize: 64
         })
         .then(history => history)

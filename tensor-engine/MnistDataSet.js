@@ -9,7 +9,7 @@ class MnistDataSet {
     let batchArray = [];
     let mnistBatchedObjects = [];
     for (let i = 1; i < dfb.length; i++) {
-      batchArray.push(dfb[i]);
+      batchArray.push(dfb[i] / 255.0);
       if (i % this.BATCH_SIZE === 0 && i >= this.BATCH_SIZE) {
         mnistBatchedObjects.push({ xs: batchArray });
         batchArray = [];

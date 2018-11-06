@@ -25,7 +25,7 @@ class NeuralNetwork {
   createModel(batchObjects) {
     //create a sequential model where layers can be stacked
     this.model = tf.sequential();
-    const LEARNING_RATE = 0.15;
+    const LEARNING_RATE = 0.1;
 
     //takes in config objects
     this.model.add(
@@ -85,54 +85,44 @@ class NeuralNetwork {
     of our model and the probability distribution given by our label, 
     which will be a distribution with 1 (100%) in the correct class label.
     */
-   this.model.compile({
+    this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
       metrics: ['accuracy']
     });
-    this.train(batchObjects).then(() => {}).catch(err => {console.log(err)});
+
+    this.train(batchObjects)
+      .then(() => {})
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   async train(batchObjects) {
-    // for (let i = 0; i < batchObjects.length; i++) {
-    //if (i % 5000 === 0 && i >= 5000) {
-    //console.log(
-    // `!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! - ${i} - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`
-    //);
-    //}
     let inputs = [];
     let outputs = [];
     console.log('Creating input and output arrays...');
     for (let i = 0; i < batchObjects.length; i++) {
-      let xs = tf.tensor4d(batchObjects[i].xs, [64,28, 28,1]);
+      let xs = tf.tensor4d(batchObjects[i].xs, [64, 28, 28, 1]);
       inputs.push(xs);
-      let ys = tf.tensor(batchObjects[i].ys, [64,10]);
+      let ys = tf.tensor2d(batchObjects[i].ys, [64, 10]);
       outputs.push(ys);
     }
     console.log('Done with creating the input and output arrays');
-    let histories = [];
-    for ( let i = 0; i < inputs.length; i++) {
+    let start = Date.now();
+    for (let i = 0; i < inputs.length; i++) {
       await this.model
-      .fit(inputs[i], outputs[i], 
-         {
-            epochs: 50,
-            batchSize: 64
-         }).then((history) => histories.push(history)).catch(err => console.log(err));
+        .fit(inputs[i], outputs[i], {
+          epochs: 225,
+          batchSize: 64
+        })
+        .then(history => history)
+        .catch(err => console.log(err));
     }
-    console.log(`${histories.length} : ${histories[0]}`);
+    let duration = Date.now() - start;
+    console.log(`Took ${duration}ms to train`);
+    await this.model.save(`file:///${__dirname}/../public/digit-recog-model`);
   }
-
-//   async fitAsync(xs, ys) {
-//    await this.model
-//    .fit(xs, ys, {
-//      epochs: 1,
-//      batchSize: 64
-//    });
-//    // .then(history => {
-//    //    return history;
-//    // })
-//    // .catch(err => console.log(err));
-//   }
 }
 
 module.exports = NeuralNetwork;

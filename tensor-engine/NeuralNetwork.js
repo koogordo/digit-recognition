@@ -13,7 +13,19 @@ class NeuralNetwork {
               .toBatchObjects(dfb, lfb)
               .then(batchObjs => {
                 this.batchObjects = batchObjs;
-                this.createModel(this.batchObjects);
+                //this.createModel(this.batchObjects);
+                this.createModel().then(() => {
+                  (async () => {
+                    for (let i = 0; i < 20; i++) {
+                      console.log(`Starting epoch ${i + 1}...`);
+                      await this.train();
+                      console.log(`Finishing epoch ${i + 1}...`);
+                    }
+                    this.model.save(
+                      `file:///${__dirname}/../public/digit-recog-model`
+                    );
+                  })();
+                });
               })
               .catch(err => console.log(err));
           })
@@ -22,11 +34,10 @@ class NeuralNetwork {
       .catch(err => console.log(err));
   }
 
-  createModel(batchObjects) {
+  async createModel() {
     //create a sequential model where layers can be stacked
     this.model = tf.sequential();
     const LEARNING_RATE = 0.1;
-
     //takes in config objects
     this.model.add(
       tf.layers.conv2d({
@@ -45,7 +56,6 @@ class NeuralNetwork {
         strides: [2, 2] //means that the pooling layer will apply 2x2 windows to the input data.
       })
     );
-
     //we repeat the 2 layers increasing the filters from 8 to 16
     this.model.add(
       tf.layers.conv2d({
@@ -57,7 +67,6 @@ class NeuralNetwork {
         kernelInitializer: 'VarianceScaling'
       })
     );
-
     this.model.add(
       tf.layers.maxPooling2d({
         poolSize: [2, 2],
@@ -85,43 +94,57 @@ class NeuralNetwork {
     of our model and the probability distribution given by our label, 
     which will be a distribution with 1 (100%) in the correct class label.
     */
-    this.model.compile({
+    await this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
       metrics: ['accuracy']
     });
-
-    this.train(batchObjects)
-      .then(() => {})
-      .catch(err => {
-        console.log(err);
-      });
   }
 
-  async train(batchObjects) {
+  async train() {
+    let shuffledBatches = this.shuffle(this.batchObjects);
     let inputs = [];
     let outputs = [];
-    console.log('Creating input and output arrays...');
-    for (let i = 0; i < batchObjects.length; i++) {
-      let xs = tf.tensor4d(batchObjects[i].xs, [64, 28, 28, 1]);
+    console.log('Creating inputs...');
+    for (let i = 0; i < shuffledBatches.length; i++) {
+      let xs = tf.tensor4d(shuffledBatches[i].xs, [64, 28, 28, 1]);
       inputs.push(xs);
-      let ys = tf.tensor2d(batchObjects[i].ys, [64, 10]);
+      let ys = tf.tensor2d(shuffledBatches[i].ys, [64, 10]);
       outputs.push(ys);
     }
-    console.log('Done with creating the input and output arrays');
+    console.log('Inputs done being created...');
+
     let start = Date.now();
     for (let i = 0; i < inputs.length; i++) {
       await this.model
         .fit(inputs[i], outputs[i], {
-          epochs: 600,
+          epochs: 3,
           batchSize: 64
         })
         .then(history => history)
         .catch(err => console.log(err));
     }
-    let duration = Date.now() - start;
-    console.log(`Took ${duration}ms to train`);
-    await this.model.save(`file:///${__dirname}/../public/digit-recog-model`);
+    console.log(`First round of training took: ${start - Date.now() / 1000}ms`);
+  }
+
+  shuffle(batches) {
+    console.log('Shuffling beginning...');
+    let counter = batches.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+      // Pick a random index
+      let index = Math.floor(Math.random() * counter);
+
+      // Decrease counter by 1
+      counter--;
+
+      // And swap the last element with it
+      let temp = batches[counter];
+      batches[counter] = batches[index];
+      batches[index] = temp;
+    }
+    return batches;
   }
 }
 

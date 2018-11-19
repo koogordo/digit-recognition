@@ -8,13 +8,16 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.13.3",
     "@tensorflow/tfjs-node": "^0.1.19",
-    "canvas": "^2.0.1",
+    "canvas": "^2.1.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
+    "node-fetch": "^2.3.0",
+    "png.js": "^0.2.1",
+    "pngjs": "^3.3.3",
     "rxjs": "^6.3.3"
   },
   "devDependencies": {

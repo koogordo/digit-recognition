@@ -3,15 +3,16 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/script.js"></script>
   </head>
-  <body>
+  <body onload="init()">
     <header>
-      <h1><%= title %></h1>
-      <p>Welcome to <%= title %></p>
+      <h1>DIGIT RECOGNITION</h1>
+      <p><%= title %></p>
     </header>
 
     <section id="input">
-      <canvas id="myCanvas"></canvas>
+      <canvas id="myCanvas" onclick="click();"></canvas>
     </section>
 
     <section id="output">

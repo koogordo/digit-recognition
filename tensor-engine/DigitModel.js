@@ -1,6 +1,5 @@
 const MnistData = require('./data');
 const tf = require('@tensorflow/tfjs');
-require('@tensorflow/tfjs-node');
 class DigitModel {
   constructor() {
     this.IMAGE_H = 28;
@@ -55,6 +54,7 @@ class DigitModel {
       })
     );
   }
+
   async compile() {
     const LEARNING_RATE = 0.15;
     await this.model.compile({
@@ -63,40 +63,44 @@ class DigitModel {
       metrics: ['accuracy']
     });
   }
+
   async load() {
     console.log('DigitModel is telling data to load up...');
     this.data = new MnistData();
     await this.data.load();
     console.log('data is done loading');
   }
+
   async train() {
     const BATCH_SIZE = 64;
     const TRAIN_BATCHES = 150;
-
+    console.log('right before for loop');
     for (let i = 0; i < TRAIN_BATCHES; i++) {
       const batch = tf.tidy(() => {
         const batch = this.data.nextTrainBatch(BATCH_SIZE);
         batch.xs = batch.xs.reshape([BATCH_SIZE, 28, 28, 1]);
         return batch;
       });
-
+      console.log('right before fit');
       await this.model.fit(batch.xs, batch.labels, {
         batchSize: BATCH_SIZE,
         epochs: 1
       });
-
       tf.dispose(batch);
-
       await tf.nextFrame();
     }
+    //await this.saveModel();
   }
+
   async predict(inputImg = null) {
     if (inputImg) {
-      const xs = tf.tensor2d(inputImg, [1, this.IMAGE_SIZE]);
-      const result = tf.tidy(() => {
-        const output = this.model.predict(xs.reshape([-1, 28, 28, 1]));
-        const prediction_value = Array.from(output.argMax(1).dataSync());
-        return prediction_value;
+      this.loadModel().then(() => {
+        const xs = tf.tensor2d(inputImg, [1, this.IMAGE_SIZE]);
+        tf.tidy(() => {
+          const output = this.model.predict(xs.reshape([-1, 28, 28, 1]));
+          const prediction_value = Array.from(output.argMax(1).dataSync());
+          console.log(prediction_value);
+        });
       });
     } else {
       const batch = this.data.nextTestBatch(1);
@@ -108,17 +112,16 @@ class DigitModel {
         console.log(prediction_value);
       });
     }
-    return await result;
   }
 
   async saveModel() {
-    await this.model.save(`file:///${__dirname}/../public/digit-recog-model`);
+    await this.model.save(`file://${__dirname}/../public/digit-recog-model`);
     return await 'Model has been saved.';
   }
 
   async loadModel() {
     await tf.loadModel(
-      `file:///${__dirname}/../public/digit-recog-model/model.json`
+      `file://${__dirname}/../public/digit-recog-model/model.json`
     );
     return await 'Model has been saved.';
   }

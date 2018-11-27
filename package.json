@@ -6,7 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@tensorflow/tfjs": "^0.13.3",
     "@tensorflow/tfjs-node": "^0.1.21",
     "canvas": "^2.1.0",
     "cookie-parser": "~1.4.3",
@@ -20,7 +19,5 @@
     "pngjs": "^3.3.3",
     "rxjs": "^6.3.3"
   },
-  "devDependencies": {
-    "nodemon": "^1.18.5"
-  }
+  "devDependencies": {}
 }

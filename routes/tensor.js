@@ -8,13 +8,14 @@ router.get('/train', function(req, res, next) {
 });
 
 router.post('/predict', function(req, res, next) {
-  if (req.body) {
-    dm.load().then(() => {
-      dm.predict(req.body.data).then(ouput => {
-        res.send(output);
-      });
-    });
-  }
+  console.log(req.body.data);
+  // if (req.body) {
+  //   dm.load().then(() => {
+  //     dm.predict(req.body.data).then(ouput => {
+  //       res.send(output);
+  //     });
+  //   });
+  // }
 });
 
 router.get('/reset', function(req, res, next) {

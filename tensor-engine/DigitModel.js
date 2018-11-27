@@ -1,7 +1,11 @@
 const MnistData = require('./data');
 const tf = require('@tensorflow/tfjs');
+require('@tensorflow/tfjs-node');
 class DigitModel {
   constructor() {
+    this.IMAGE_H = 28;
+    this.IMAGE_W = 28;
+    this.IMAGE_SIZE = this.IMAGE_H * this.IMAGE_W;
     this.model = tf.sequential();
     //takes in config objects
     this.model.add(
@@ -86,15 +90,25 @@ class DigitModel {
       await tf.nextFrame();
     }
   }
-  async predict() {
-    const batch = this.data.nextTestBatch(1);
-    console.log(batch.labels.print());
-    tf.tidy(() => {
-      Array.from(batch.labels.argMax(1).dataSync());
-      const output = this.model.predict(batch.xs.reshape([-1, 28, 28, 1]));
-      const prediction_value = Array.from(output.argMax(1).dataSync());
-      console.log(prediction_value);
-    });
+  async predict(inputImg = null) {
+    if (inputImg) {
+      const xs = tf.tensor2d(inputImg, [1, this.IMAGE_SIZE]);
+      const result = tf.tidy(() => {
+        const output = this.model.predict(xs.reshape([-1, 28, 28, 1]));
+        const prediction_value = Array.from(output.argMax(1).dataSync());
+        return prediction_value;
+      });
+    } else {
+      const batch = this.data.nextTestBatch(1);
+      console.log(batch.labels.print());
+      tf.tidy(() => {
+        Array.from(batch.labels.argMax(1).dataSync());
+        const output = this.model.predict(batch.xs.reshape([-1, 28, 28, 1]));
+        const prediction_value = Array.from(output.argMax(1).dataSync());
+        console.log(prediction_value);
+      });
+    }
+    return await result;
   }
 
   async saveModel() {

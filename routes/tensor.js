@@ -2,31 +2,19 @@ const express = require('express');
 const router = express.Router();
 const NeuralNetwork = require('../tensor-engine/NeuralNetwork');
 const DigitModel = require('../tensor-engine/DigitModel');
+const dm = new DigitModel();
 router.get('/train', function(req, res, next) {
-  // const nn = new NeuralNetwork();
-  // nn.beginTraining().then(() => {
-  //   console.log('Training Done!');
-  // });
-  const dm = new DigitModel();
-  dm.compile().then(() => {
-    console.log('Compiled');
-    dm.load().then(() => {
-      console.log('we are done loading');
-      dm.train().then(() => {
-        dm.predict().then(() => {
-          console.log('predicted');
-        });
-      });
-    });
-  });
-
   res.send('Tensor loading');
 });
 
-router.get('/predict', function(req, res, next) {
-  const nn = new NeuralNetwork();
-  nn.predict();
-  res.send('Tensor predicting');
+router.post('/predict', function(req, res, next) {
+  if (req.body) {
+    dm.load().then(() => {
+      dm.predict(req.body.data).then(ouput => {
+        res.send(output);
+      });
+    });
+  }
 });
 
 router.get('/reset', function(req, res, next) {

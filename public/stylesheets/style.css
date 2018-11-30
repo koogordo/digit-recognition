@@ -4,7 +4,7 @@ body {
   margin: 0px;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
   display: grid;
-  grid-template-rows: 100px 600px;
+  grid-template-rows: 125px 490px;
   grid-auto-rows: 500px;
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -22,13 +22,13 @@ header {
 }
 
 #input {
-  padding-top: 150px;
+  padding-top: 75px;
   background: black;
   border-right: 2px solid white;
 }
 
 #output {
-  background: red;
+  background: white;
   border-right: 2px solid white;
   grid-column: 2 / 4;
 }

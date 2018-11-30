@@ -16,7 +16,7 @@ a {
 header {
   text-align: center;
   background: black;
-  border-bottom: 2px solid #008000;
+  border-bottom: 2px solid white;
   grid-column: 1 / 4;
   color: blue;
 }
@@ -24,12 +24,12 @@ header {
 #input {
   padding-top: 150px;
   background: black;
-  border-right: 2px solid #008000;
+  border-right: 2px solid white;
 }
 
 #output {
   background: red;
-  border-right: 2px solid #008000;
+  border-right: 2px solid white;
   grid-column: 2 / 4;
 }
 
@@ -45,7 +45,7 @@ header {
 @media only screen and (max-width: 600px) {
 
   #input {
-    background: green;
+    background: black;
     grid-column: 1 / 4;
   }
   #output {
@@ -67,7 +67,7 @@ header {
 
 h1 {
   padding-top: -5%;
-  color: green;
+  color: white;
   font-size: 5rem;
   font-family: "VT323"
 }

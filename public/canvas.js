@@ -49,6 +49,13 @@ $('#predict').click(function() {
   savePixels();
 });
 
+$('#clear').click(function() {
+  console.log("clear");
+  clear();
+  background(255);
+});
+
+
 class TextScramble {
   constructor(el) {
     this.el = el

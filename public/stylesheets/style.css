@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
 body {
   margin: 0px;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
   display: grid;
-  grid-template-rows: 100px 500px;
+  grid-template-rows: 100px 600px;
   grid-auto-rows: 500px;
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -13,22 +15,25 @@ a {
 
 header {
   text-align: center;
-  background: blue;
+  background: black;
+  border-bottom: 2px solid #008000;
   grid-column: 1 / 4;
+  color: blue;
 }
 
 #input {
-  background: green;
+  padding-top: 150px;
+  background: black;
+  border-right: 2px solid #008000;
 }
 
 #output {
   background: red;
+  border-right: 2px solid #008000;
   grid-column: 2 / 4;
 }
 
 #myCanvas {
-  /* height: 140px;
-  width: 140px; */
   background-color: white;
   margin-right: auto;
   margin-left: auto;
@@ -47,4 +52,34 @@ header {
     background: red;
     grid-column: 1/ 4;
   }
+}
+
+
+
+.container {
+    display: flex;           
+    flex-direction: column;  
+    justify-content: center;
+    align-items: left;
+    margin-left: 0px;
+    height: 100%;
+}
+
+h1 {
+  padding-top: -5%;
+  color: green;
+  font-size: 5rem;
+  font-family: "VT323"
+}
+
+h1 {
+  position:relative;
+} 
+
+.blink:after {
+  animation: blink linear 1.5s infinite;
+  content:" ";
+  position: absolute;
+  right: -60px;
+  top:-10px;
 }

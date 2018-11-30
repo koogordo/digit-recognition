@@ -115,7 +115,7 @@ class TextScramble {
 // ——————————————————————————————————————————————————
 
 const phrases = [
-  'Digit Recognition',
+  'Digit Recognition'
 ]
 
 const el = document.querySelector('.text')

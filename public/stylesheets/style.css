@@ -4,7 +4,7 @@ body {
   margin: 0px;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
   display: grid;
-  grid-template-rows: 125px 490px;
+  grid-template-rows: 125px 560px;
   grid-auto-rows: 500px;
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -21,15 +21,30 @@ header {
   color: blue;
 }
 
+#clear {
+  width: 135px;
+  border-radius: 1px;
+  height: 25px;
+  display: inline;
+}
+
+#predict {
+  width: 135px;
+  border-radius: 1px;
+  height: 25px;
+  display: inline;
+}
+
 #input {
   padding-top: 75px;
   background: black;
-  border-right: 2px solid white;
+  border-right: 2px solid black;
+  padding-left: 15%;
 }
 
 #output {
   background: white;
-  border-right: 2px solid white;
+  border-left: 2px solid black;
   grid-column: 2 / 4;
 }
 
@@ -44,15 +59,20 @@ header {
 
 @media only screen and (max-width: 600px) {
 
+  h1 {
+    font-size: 3rem;
+  }
+
   #input {
     background: black;
     grid-column: 1 / 4;
   }
   #output {
-    background: red;
+    background: white;
     grid-column: 1/ 4;
   }
 }
+
 
 
 
@@ -68,7 +88,7 @@ header {
 h1 {
   padding-top: -5%;
   color: white;
-  font-size: 5rem;
+  font-size: 4rem;
   font-family: "VT323"
 }
 

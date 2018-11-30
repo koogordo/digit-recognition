@@ -93,15 +93,17 @@ class DigitModel {
 
   async predict(inputImg = null) {
     if (inputImg) {
-      this.loadModel().then(() => {
+      const prediction = this.loadModel().then(() => {
         console.log('model loaded');
         const xs = tf.tensor2d(inputImg, [1, this.IMAGE_SIZE]);
-        tf.tidy(() => {
+        const prediction = tf.tidy(() => {
           const output = this.model.predict(xs.reshape([-1, 28, 28, 1]));
           const prediction_value = Array.from(output.argMax(1).dataSync());
-          console.log(prediction_value);
+          return prediction_value;
         });
+        return prediction;
       });
+      return prediction;
     } else {
       const batch = this.data.nextTestBatch(1);
       console.log(batch.labels.print());

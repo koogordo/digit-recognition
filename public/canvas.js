@@ -6,7 +6,7 @@ function setup() {
   var myCanvas = createCanvas(size, size);
   myCanvas.parent('input');
   background(255);
-  strokeWeight(30);
+  strokeWeight(15);
   stroke(0);
 }
 

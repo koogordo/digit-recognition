@@ -13,7 +13,7 @@ class DigitModel {
         kernelSize: 5, //The size of the sliding convolutional filter windows to be applied to the input data. 5x5 pixels
         filters: 8, //nThe number of filter windows to apply to the input data
         strides: 1, //how many pixels the filter will shift each time it moves over the image.
-        activation: 'relu',
+        activation: 'sigmoid',
         kernelInitializer: 'VarianceScaling' //The method to use for randomly initializing the model weights, which is very important to training dynamics
       })
     );
@@ -56,7 +56,7 @@ class DigitModel {
   }
 
   async compile() {
-    const LEARNING_RATE = 0.14;
+    const LEARNING_RATE = 0.5;
     await this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',

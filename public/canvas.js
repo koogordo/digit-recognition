@@ -51,7 +51,7 @@ $('#predict').click(function() {
 
 $('#clear').click(function() {
   console.log("clear");
-  clear();
+  // clear();
   background(255);
 });
 

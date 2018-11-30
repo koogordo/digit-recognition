@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const DigitModel = require('../tensor-engine/DigitModel');
-
+const dm = new DigitModel();
 router.get('/train', function(req, res, next) {
-  const dm = new DigitModel();
   dm.compile()
     .then(() => {
       console.log('compiled');
@@ -27,14 +26,9 @@ router.get('/train', function(req, res, next) {
 });
 
 router.post('/predict', function(req, res, next) {
-  console.log(req.body.data[0]);
-  // if (req.body) {
-  //   dm.load().then(() => {
-  //     dm.predict(req.body.data).then(ouput => {
-  //       res.send(output);
-  //     });
-  //   });
-  // }
+  dm.predict(req.body).then(() => {
+    res.send('Check console for prediction');
+  });
 });
 
 router.get('/reset', function(req, res, next) {

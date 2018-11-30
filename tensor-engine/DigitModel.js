@@ -95,6 +95,7 @@ class DigitModel {
   async predict(inputImg = null) {
     if (inputImg) {
       this.loadModel().then(() => {
+        console.log('model loaded');
         const xs = tf.tensor2d(inputImg, [1, this.IMAGE_SIZE]);
         tf.tidy(() => {
           const output = this.model.predict(xs.reshape([-1, 28, 28, 1]));

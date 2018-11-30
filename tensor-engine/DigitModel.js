@@ -56,7 +56,7 @@ class DigitModel {
   }
 
   async compile() {
-    const LEARNING_RATE = 0.1;
+    const LEARNING_RATE = 0.14;
     await this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
@@ -73,7 +73,7 @@ class DigitModel {
 
   async train() {
     const BATCH_SIZE = 64;
-    const TRAIN_BATCHES = 700;
+    const TRAIN_BATCHES = 150;
     console.log('right before for loop');
     for (let i = 0; i < TRAIN_BATCHES; i++) {
       const batch = tf.tidy(() => {
@@ -84,12 +84,11 @@ class DigitModel {
       console.log('right before fit');
       await this.model.fit(batch.xs, batch.labels, {
         batchSize: BATCH_SIZE,
-        epochs: 1
+        epochs: 10
       });
       tf.dispose(batch);
       await tf.nextFrame();
     }
-    //await this.saveModel();
   }
 
   async predict(inputImg = null) {

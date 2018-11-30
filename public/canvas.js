@@ -2,11 +2,11 @@ let data = [];
 
 function setup() {
   let size = 280;
-  // pixelDensity(0.05);
+   //pixelDensity(0.05);
   var myCanvas = createCanvas(size, size);
   myCanvas.parent('input');
   background(255);
-  strokeWeight(20);
+  strokeWeight(30);
   stroke(0);
 }
 

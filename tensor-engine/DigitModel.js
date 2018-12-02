@@ -73,7 +73,7 @@ class DigitModel {
 
   async train() {
     const BATCH_SIZE = 64;
-    const TRAIN_BATCHES = 900;
+    const TRAIN_BATCHES = 935;
     console.log('right before for loop');
     for (let i = 0; i < TRAIN_BATCHES; i++) {
       const batch = tf.tidy(() => {

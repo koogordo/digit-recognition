@@ -27,7 +27,7 @@ router.get('/train', function(req, res, next) {
 
 router.post('/predict', function(req, res, next) {
   dm.predict(req.body).then(prediction => {
-    res.send(`The result is ${prediction}`);
+    res.send(prediction);
   });
 });
 

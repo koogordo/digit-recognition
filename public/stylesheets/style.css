@@ -41,7 +41,7 @@ header {
   height: 30px;
   display: inline-block;
   outline: none;
-  /* border: none; */
+  cursor: pointer;
   color: white;
 }
 
@@ -52,6 +52,11 @@ header {
   height: 20px;
 }
 
+#train {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #234b76;
+  margin-bottom: 5px;
+}
 #clear {
   background: rgba(255, 99, 132, 0.2);
   border: 1px solid rgba(255,99,132,1);

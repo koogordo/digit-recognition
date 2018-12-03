@@ -25,22 +25,22 @@ class DigitModel {
       })
     );
     //we repeat the 2 layers increasing the filters from 8 to 16
-    this.model.add(
-      tf.layers.conv2d({
-        //input shape 'inherited' from last conv2d layer
-        kernelSize: 5,
-        filters: 16,
-        strides: 1,
-        activation: 'relu',
-        kernelInitializer: 'VarianceScaling'
-      })
-    );
-    this.model.add(
-      tf.layers.maxPooling2d({
-        poolSize: [2, 2],
-        strides: [2, 2]
-      })
-    );
+    // this.model.add(
+    //   tf.layers.conv2d({
+    //     //input shape 'inherited' from last conv2d layer
+    //     kernelSize: 5,
+    //     filters: 16,
+    //     strides: 1,
+    //     activation: 'relu',
+    //     kernelInitializer: 'VarianceScaling'
+    //   })
+    // );
+    // this.model.add(
+    //   tf.layers.maxPooling2d({
+    //     poolSize: [2, 2],
+    //     strides: [2, 2]
+    //   })
+    // );
 
     //Next, let's add a flatten layer to flatten the output of the previous layer to a vector
     this.model.add(tf.layers.flatten());
@@ -56,7 +56,7 @@ class DigitModel {
   }
 
   async compile() {
-    const LEARNING_RATE = 0.15;
+    const LEARNING_RATE = 0.5;
     await this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
@@ -73,7 +73,7 @@ class DigitModel {
 
   async train() {
     const BATCH_SIZE = 64;
-    const TRAIN_BATCHES = 900;
+    const TRAIN_BATCHES = 935;
     console.log('right before for loop');
     for (let i = 0; i < TRAIN_BATCHES; i++) {
       const batch = tf.tidy(() => {

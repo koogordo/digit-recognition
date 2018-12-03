@@ -1,12 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,200,300,400');
 
+:root {
+  --bg:rgb(7, 27, 41);
+  --sideBar:rgba(14, 21, 36, 0.4);
+}
 body {
   margin: 0px;
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
   display: grid;
-  grid-template-rows: 125px 560px;
+  grid-template-rows: 125px 500px;
   grid-auto-rows: 500px;
   grid-template-columns: 1fr 1fr 1fr;
+  background: var(--bg);
+  font-family: 'Lato', sans-serif;
+}
+
+h1 {
+
+  color: rgb(238, 247, 255);
+  font-size: 3rem;
+  font-weight: 100;
+  font-family: "Lato";
 }
 
 a {
@@ -15,36 +29,53 @@ a {
 
 header {
   text-align: center;
-  background: black;
-  border-bottom: 2px solid white;
+  background: var(--sideBar);
   grid-column: 1 / 4;
-  color: blue;
+  /* color: blue; */
 }
 
+
+#input button {
+  width: 138px;
+  border-radius: 0px;
+  height: 30px;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  color: white;
+}
+
+#chartContain {
+  margin-top: 50px;
+  min-width: 300px;
+  width: 90%;
+  height: 20px;
+}
+
+#train {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #234b76;
+  margin-bottom: 5px;
+}
 #clear {
-  width: 135px;
-  border-radius: 1px;
-  height: 25px;
-  display: inline;
+  background: rgba(255, 99, 132, 0.2);
+  border: 1px solid rgba(255,99,132,1);
 }
-
 #predict {
-  width: 135px;
-  border-radius: 1px;
-  height: 25px;
-  display: inline;
+  background: rgba(75, 192, 192, 0.2);
+  border: 1px solid rgba(75, 192, 192, 1);
 }
 
 #input {
   padding-top: 75px;
-  background: black;
-  border-right: 2px solid black;
+  background: var(--sideBar);
+  /* border-right: 2px solid black; */
   padding-left: 15%;
 }
 
 #output {
-  background: white;
-  border-left: 2px solid black;
+  /* background: white; */
+  /* border-left: 2px solid black; */
   grid-column: 2 / 4;
 }
 
@@ -54,47 +85,35 @@ header {
   margin-left: auto;
   margin-top: 200px;
   display: block;
-  border: 3px solid black;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 620px) {
 
   h1 {
     font-size: 3rem;
   }
 
   #input {
-    background: black;
+    /* background: black; */
     grid-column: 1 / 4;
   }
   #output {
-    background: white;
+    /* background: white; */
     grid-column: 1/ 4;
   }
 }
 
-
-
-
-.container {
+/* .container {
     display: flex;           
     flex-direction: column;  
     justify-content: center;
     align-items: left;
     margin-left: 0px;
     height: 100%;
-}
+} */
 
-h1 {
-  padding-top: -5%;
-  color: white;
-  font-size: 4rem;
-  font-family: "VT323"
-}
 
-h1 {
-  position:relative;
-} 
+
 
 .blink:after {
   animation: blink linear 1.5s infinite;

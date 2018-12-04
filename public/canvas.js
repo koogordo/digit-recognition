@@ -21,19 +21,17 @@ function savePixels() {
   let input = [];
   img.resize(28, 28);
   img.loadPixels();
+  console.log(input);
+  console.log(img);
   for (let i = 0; i < img.pixels.length; i += 4) {
     let pix = img.pixels[i];
     input[i / 4] = 1 - pix / 255;
   }
 
-  console.log(input);
-  loadPixels();
+  // let compressed_pixels = pixels.map(pix => {
+  //   return pix / 255;
+  // });
 
-  let compressed_pixels = pixels.map(pix => {
-    return pix / 255;
-  });
-
-  console.log(compressed_pixels.length);
   //console.log(img);
   let payload = JSON.stringify(input);
   let url = 'http://localhost:3000/tensor/predict';
@@ -46,7 +44,7 @@ function savePixels() {
       console.log(prediction[0]);
       finalPrediction = prediction[0];
 
-      myChart.data.datasets[0].data = [0,0,0,0,0,0,0,0,0,0];
+      myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       myChart.data.datasets[0].data[finalPrediction] = 1;
       myChart.data.datasets[0].backgroundColor = 'rgba(54, 162, 235, 0.2)';
       myChart.data.datasets[0].borderColor = 'rgba(54, 162, 235, 1)';
@@ -62,7 +60,7 @@ $('#predict').click(function() {
 $('#clear').click(function() {
   // console.log('clear');
   // clear();
-  myChart.data.datasets[0].data = [0,0,0,0,0,0,0,0,0,0];
+  myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   myChart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)';
   myChart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)';
   myChart.update();
@@ -73,52 +71,56 @@ $('#clear').click(function() {
 // OUTPUT GRAPH
 // =============================================================================
 
-var ctx = document.getElementById("myChart").getContext('2d');
+var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-        datasets: [{
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
-        }]
+  type: 'line',
+  data: {
+    labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    datasets: [
+      {
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)'
+        ],
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    legend: {
+      display: false
     },
-    options: {
-      legend: {
-        display: false,
-      },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true
+          }
         }
+      ]
     }
+  }
 });
 
 // =============================================================================

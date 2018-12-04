@@ -41,6 +41,10 @@ class DigitModel {
         strides: [2, 2]
       })
     );
+<<<<<<< HEAD
+=======
+
+>>>>>>> a2da33915bed79d637f62ec9f9406a624b3cfbc6
 
     //Next, let's add a flatten layer to flatten the output of the previous layer to a vector
     this.model.add(tf.layers.flatten());
@@ -56,7 +60,7 @@ class DigitModel {
   }
 
   async compile() {
-    const LEARNING_RATE = 0.5;
+    const LEARNING_RATE = 0.15;
     await this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
@@ -72,8 +76,8 @@ class DigitModel {
   }
 
   async train() {
-    const BATCH_SIZE = 64;
-    const TRAIN_BATCHES = 600;
+    const BATCH_SIZE = 16;
+    const TRAIN_BATCHES = 935;
     console.log('right before for loop');
     for (let i = 0; i < TRAIN_BATCHES; i++) {
       const batch = tf.tidy(() => {

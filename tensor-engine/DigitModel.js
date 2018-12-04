@@ -41,10 +41,6 @@ class DigitModel {
         strides: [2, 2]
       })
     );
-<<<<<<< HEAD
-=======
-
->>>>>>> a2da33915bed79d637f62ec9f9406a624b3cfbc6
 
     //Next, let's add a flatten layer to flatten the output of the previous layer to a vector
     this.model.add(tf.layers.flatten());

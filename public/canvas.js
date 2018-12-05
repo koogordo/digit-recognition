@@ -33,11 +33,14 @@ function savePixels() {
   // });
 
   //console.log(img);
+  //url on train button must changed also when moved between local and heroku deployment
+  const HEROKU_URL = 'http://amazeballsdigit.herokuapp.com/tensor/predict';
+  const LOCAL_URL = 'http://localhost:3000/tensor/predict';
+
   let payload = JSON.stringify(input);
-  let url = 'http://localhost:3000/tensor/predict';
   $.ajax({
     type: 'POST',
-    url: url,
+    url: HEROKU_URL,
     contentType: 'application/json',
     data: payload,
     success: prediction => {

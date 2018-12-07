@@ -56,7 +56,7 @@ class DigitModel {
   }
 
   async compile() {
-    const LEARNING_RATE = 0.15;
+    const LEARNING_RATE = 0.60;
     await this.model.compile({
       optimizer: tf.train.sgd(LEARNING_RATE), //
       loss: 'categoricalCrossentropy',
@@ -72,7 +72,7 @@ class DigitModel {
   }
 
   async train() {
-    const BATCH_SIZE = 16;
+    const BATCH_SIZE = 64;
     const TRAIN_BATCHES = 935;
     console.log('right before for loop');
     for (let i = 0; i < TRAIN_BATCHES; i++) {

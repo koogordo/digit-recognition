@@ -3,7 +3,7 @@ let finalPrediction;
 
 function setup() {
   let size = 280;
-  //pixelDensity(0.05);
+  // pixelDensity(0.05);
   var myCanvas = createCanvas(size, size);
   myCanvas.parent('input');
   background(255);
@@ -40,7 +40,7 @@ function savePixels() {
   let payload = JSON.stringify(input);
   $.ajax({
     type: 'POST',
-    url: HEROKU_URL,
+    url: LOCAL_URL,
     contentType: 'application/json',
     data: payload,
     success: prediction => {
@@ -49,8 +49,8 @@ function savePixels() {
 
       myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       myChart.data.datasets[0].data[finalPrediction] = 1;
-      myChart.data.datasets[0].backgroundColor = 'rgba(54, 162, 235, 0.2)';
-      myChart.data.datasets[0].borderColor = 'rgba(54, 162, 235, 1)';
+      // myChart.data.datasets[0].backgroundColor = 'rgba(54, 162, 235, 0.2)';
+      // myChart.data.datasets[0].borderColor = 'rgba(54, 162, 235, 1)';
       myChart.update();
     }
   });
@@ -64,8 +64,8 @@ $('#clear').click(function() {
   // console.log('clear');
   // clear();
   myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  myChart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)';
-  myChart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)';
+  // myChart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)';
+  // myChart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)';
   myChart.update();
   background(255);
 });
@@ -76,7 +76,7 @@ $('#clear').click(function() {
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
-  type: 'line',
+  type: 'bar',
   data: {
     labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
     datasets: [
